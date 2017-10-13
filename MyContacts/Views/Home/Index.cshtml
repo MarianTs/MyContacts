@@ -1,0 +1,89 @@
+﻿@model IEnumerable<MyContacts.Models.Contacts>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+    <script type="text/javascript" src="../../Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#txtfilter").keyup(function () {
+                $("#tblData").hide('fast'); //Hide the Table showing All Data
+                $('#contactsInfoDetails').show('fast'); //Show the <div> showing filtered Data
+                var data = $(this).val();
+                var url = "/Home/Index/"; //The Url to the Action  Method of the Controller
+                var con = {}; //The Object to Send Data Back to the Controller
+                con.Name = $("#txtfilter").val();
+                // Check whether the TextBox Contains text
+                // if it does then make ajax call
+                if ($("#txtfilter").val().length > 0 || $("#txtfilter").val() != "") {
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: con,
+                        dataType: "html",
+                        success: function (evt) {
+                            $('#contactsInfoDetails').html(evt);
+                        },
+                    });
+                }
+                else {
+                    $('#contactsInfoDetails').hide('fast'); //Hide the <div>
+                    $("#tblData").show('fast'); //Hide the Table
+                }
+            });
+        });
+    </script>
+
+
+
+<h2>Contacts</h2>
+<table>
+    <tr>
+        <td>
+            <input type="text" id="txtfilter" placeholder="Search name or phone" />&nbsp;&nbsp;
+        </td>
+        <td align="center">
+            <input type="image" src="~/Content/images/add.png" alt="Submit" width="24" height="24" onclick="location.href='@Url.Action("CreateNewContact", "Home")'">
+        </td>
+    </tr>
+    
+</table>
+
+<br />
+<div id="contactsInfoDetails">
+</div>
+
+
+
+
+<table class="table" id="tblData">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNumber)
+        </td>
+        
+    </tr>
+}
+
+</table>
+
+
+@*onkeyup="myFunction()"*@
