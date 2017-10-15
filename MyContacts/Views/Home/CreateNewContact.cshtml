@@ -11,6 +11,14 @@
                 return false;
             return true;
         }
+        function isEmpty(field) {
+            var name = document.getElementById("nameTB").value;
+            var phone = document.getElementById("phoneTB").value;
+            if (name === "" || phone === "")
+            {
+                alert("One or more of the fields are empty")
+            }
+        }
     </SCRIPT>
 
 
@@ -28,7 +36,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @maxlength = "40" } })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @maxlength = "40", @id="nameTB" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -36,7 +44,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return isNumberKey(event)", @maxlength = "10" } })
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return isNumberKey(event)", @maxlength = "10" , @id = "phoneTB" } })
                 @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
             </div>
             
@@ -44,7 +52,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create New Contacts" class="btn btn-default" />
+                <input type="submit" value="Create New Contacts" class="btn btn-default" onclick="isEmpty(this)" />
+                <p id="error"></p>
             </div>
         </div>
     </div>

@@ -58,6 +58,14 @@ namespace MyContacts.Controllers
         [HttpPost]
         public ActionResult CreateNewContact(Models.Contacts contacts)
         {
+            if (contacts==null || contacts.Name==null || contacts.PhoneNumber==null)
+            {
+                return View();
+            }
+            if (contacts.Name.Length==0 || contacts.PhoneNumber.Length==0)
+            {
+                return View();
+            }
             if (ModelState.IsValid)
             {
                 db.Contacts.Add(contacts);
